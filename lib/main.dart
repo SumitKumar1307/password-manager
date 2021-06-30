@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:password_manager/add.dart';
 
-void main(List<String> args) => runApp(MyApp());
+void main(List<String> args) => runApp(PasswordManger());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PasswordManger extends StatelessWidget {
+  const PasswordManger({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(14))),
                     height: 75,
                     width: 75,
-                    child: Icon(Icons.add),
+                    child: CupertinoButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(builder: (context) => AddPage())
+                        );
+                      },
+                      child: Icon(Icons.add)
+                    )
                   ),
                 ]),
               ]),
@@ -101,17 +110,54 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 children: <Widget>[
                   for (int i = 0; i < 10; i++)
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      width: size.width * 0.9,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(22),
-                        ),
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 30,
+                      right: 30,
+                      top: 20,
+                      bottom: 20,
+                    ),
+                    margin: EdgeInsets.only(bottom: 20),
+                    width: size.width * 0.9,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(22),
                       ),
                     ),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Google",
+                              style: TextStyle(
+                                color: CupertinoColors.activeBlue,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 30,
+                              ),
+                            ),
+                            Icon(Icons.edit),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "*****************",
+                              style: TextStyle(
+                                color: CupertinoColors.activeBlue,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Icon(Icons.copy),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
