@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'main.dart';
 
 class AddPage extends StatelessWidget {
   @override
@@ -105,10 +104,7 @@ class _AddScreenState extends State<AddScreen> {
               height: 75,
               width: 75,
               child: CupertinoButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => AddPage()));
-                },
+                onPressed: () {},
                 child: Icon(Icons.add),
               ),
             ),
