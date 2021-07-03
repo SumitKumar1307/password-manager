@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:password_manager/add.dart';
 import 'data/data.dart';
+import 'edit.dart';
 
 void main(List<String> args) => runApp(PasswordManger());
 
@@ -128,7 +130,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           message: Text("Choose One"),
                           actions: [
                             CupertinoActionSheetAction(
-                              onPressed: () => {Navigator.pop(context)},
+                              onPressed: () => {
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) => EditPage(
+                                            passwords.indexOf(password))))
+                              },
                               child: Text("Edit"),
                             ),
                             CupertinoActionSheetAction(
@@ -153,12 +161,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       CupertinoDialogAction(
                                         child: Text("Yes"),
                                         isDefaultAction: false,
-                                        onPressed: () => {Navigator.popUntil(context,ModalRoute.withName('/'))},
+                                        onPressed: () => {
+                                          Navigator.popUntil(
+                                              context, ModalRoute.withName('/'))
+                                        },
                                       ),
                                       CupertinoDialogAction(
                                         child: Text("No"),
                                         isDefaultAction: true,
-                                        onPressed: () => {Navigator.popUntil(context,ModalRoute.withName('/'))},
+                                        onPressed: () => {
+                                          Navigator.popUntil(
+                                              context, ModalRoute.withName('/'))
+                                        },
                                       )
                                     ],
                                   ),
@@ -204,7 +218,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 30,
                                   ),
                                 ),
-                                Icon(Icons.edit),
+                                GestureDetector(
+                                  onTap: () => {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => EditPage(
+                                          passwords.indexOf(password),
+                                        ),
+                                      ),
+                                    )
+                                  },
+                                  child: Icon(Icons.edit),
+                                ),
                               ],
                             ),
                             Row(
@@ -217,7 +243,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                Icon(Icons.copy),
+                                GestureDetector(
+                                    onTap: () => {
+                                          Clipboard.setData(new ClipboardData(
+                                              text: password.password))
+                                        },
+                                    child: Icon(Icons.copy)),
                               ],
                             ),
                           ],

@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'add.dart';
 
-class AddPage extends StatelessWidget {
-
+class EditPage extends StatelessWidget {
+  EditPage(this.index);
+  final int index;
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child: AddScreen(),
+      child: EditScreen(index: this.index,),
       backgroundColor: Color(0xFFE0DFFF),
     );
   }
 }
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({Key? key}) : super(key: key);
+class EditScreen extends StatefulWidget {
+  final int index;
+  const EditScreen({Key? key, required this.index}) : super(key: key);
 
   @override
-  _AddScreenState createState() => _AddScreenState();
+  _EditScreenState createState() => _EditScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,7 +63,7 @@ class _AddScreenState extends State<AddScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Add\nPassword",
+                  "Edit\nPassword",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 30,
@@ -89,9 +92,8 @@ class _AddScreenState extends State<AddScreen> {
               width: 75,
               child: CupertinoButton(
                 child: Icon(Icons.lock),
-                onPressed: () => {
-                  Navigator.popUntil(context, ModalRoute.withName('/')),
-                },
+                onPressed: () =>
+                    {Navigator.popUntil(context, ModalRoute.withName('/'))},
               ),
             ), // lock
             SizedBox(height: 15),
@@ -105,7 +107,13 @@ class _AddScreenState extends State<AddScreen> {
               height: 75,
               width: 75,
               child: CupertinoButton(
-                onPressed: () {},
+                onPressed: () => {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => AddPage(),
+                      ))
+                },
                 child: Icon(Icons.add),
               ),
             ),
