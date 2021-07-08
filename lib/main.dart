@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   Container(
                     height: 180,
-                    width: 260,
+                    width: size.width * 0.6775700934579439,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -82,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 10), // Big Block
+                  SizedBox(width: 10),
                   Column(
                     children: <Widget>[
                       Container(
@@ -104,12 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         child: CupertinoButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => AddPage(),
-                              ),
-                            );
+                            moveToAdd();
                           },
                           child: Icon(Icons.add),
                         ),
@@ -131,16 +128,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           actions: [
                             CupertinoActionSheetAction(
                               onPressed: () => {
-                                Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                        builder: (context) => EditPage(
-                                            passwords.indexOf(password))))
+                                moveToEdit(passwords.indexOf(password))
                               },
                               child: Text("Edit"),
                             ),
                             CupertinoActionSheetAction(
-                              onPressed: () => {Navigator.pop(context)},
+                              onPressed: () => {
+                                Clipboard.setData(
+                                    new ClipboardData(text: password.password)),
+                                Navigator.pop(context)
+                              },
                               child: Text("Copy"),
                             ),
                             CupertinoActionSheetAction(
@@ -197,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           bottom: 20,
                         ),
                         margin: EdgeInsets.only(bottom: 20),
-                        width: size.width * 0.9,
+                        width: size.width * 0.6775700934579439 + 85,
                         height: 100,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -220,14 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () => {
-                                    Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => EditPage(
-                                          passwords.indexOf(password),
-                                        ),
-                                      ),
-                                    )
+                                    moveToEdit(passwords.indexOf(password))
                                   },
                                   child: Icon(Icons.edit),
                                 ),
@@ -262,5 +252,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  FutureOr refresh() {
+    setState(() {});
+  }
+
+  void moveToAdd() {
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => AddPage()))
+        .then((value) => refresh());
+  }
+
+  void moveToEdit(int index) {
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => EditPage(index)))
+        .then((value) => refresh());
   }
 }
